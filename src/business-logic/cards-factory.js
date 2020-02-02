@@ -15,7 +15,8 @@ class CardsFactory {
     const randomValuesWithPairs = randomValues
       .concat(randomValues)
       .sort(() => 0.5 - Math.random()); // random sorting
-    return randomValuesWithPairs.map(value => new Card(value));
+    return randomValuesWithPairs
+      .map(({ value, color, colorInverted }) => new Card(value, color, colorInverted));
   }
 }
 

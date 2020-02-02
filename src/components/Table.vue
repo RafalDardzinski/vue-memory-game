@@ -15,6 +15,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import Card from '@/components/Card.vue';
 
@@ -77,10 +78,14 @@ export default {
   },
 };
 </script>
+
 <style lang="scss" scoped>
   .cards-table {
+    width: 624px;
+    margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-evenly;
 
     .card-container {
       margin: 2px;

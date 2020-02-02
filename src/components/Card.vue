@@ -1,14 +1,19 @@
 <template>
   <div @click="flip()" :class="{ card: true, 'flipped': averseVisible, 'discarded': isDiscarded }">
     <div class="card-content">
-      <div class="reverse"></div>
-      <div class="averse">
+      <div class="reverse">
+      </div>
+      <div class="averse"
+        :style="{ backgroundColor: color, color: colorInverted, borderColor: colorInverted }"
+      >
         <div class="averse-value">
+          {{ shortenedValue }}
         </div>
       </div>
     </div>
   </div>
 </template>
+
 <script>
 export default {
   data() {
@@ -22,6 +27,15 @@ export default {
   computed: {
     isDiscarded() {
       return this.cardObj.isDiscarded;
+    },
+    color() {
+      return this.cardObj.color;
+    },
+    colorInverted() {
+      return this.cardObj.colorInverted;
+    },
+    shortenedValue() {
+      return this.cardObj.value.substring(0, 8);
     },
   },
   methods: {
@@ -40,6 +54,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss" scoped>
 @import "../colors.scss";
 
@@ -72,14 +87,20 @@ export default {
         }
 
         &.averse {
-          background-color: $lightAccent;
           transform: rotateY(180deg);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 1.2em;
+          width: 100%;
+          border-width: 2px;
+          border-style: solid;
+          box-sizing: border-box;
         }
       }
     }
 
     &.discarded {
-      background-color: red;
       visibility: hidden;
       opacity: 0;
     }

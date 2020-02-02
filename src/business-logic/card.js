@@ -1,15 +1,10 @@
-const _value = new WeakMap();
-
 class Card {
-  constructor(value) {
-    _value.set(this, value);
+  constructor(value, color, colorInverted) {
+    this.value = value;
+    this.color = color;
+    this.colorInverted = colorInverted;
     this.isDiscarded = false;
   }
-
-  get value() {
-    return _value.get(this);
-  }
-
 
   isPairOf(card) {
     return this.value === card.value;

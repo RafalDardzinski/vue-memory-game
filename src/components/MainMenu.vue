@@ -4,7 +4,7 @@
     <div>
       <input type="text" name="player-name" id="player-name" v-model="playerName">
       <input
-        v-model="numberOfCards"
+        v-model.number="numberOfCards"
         type="number"
         name="cardsnumber"
         id="cardsnumber"
@@ -17,7 +17,7 @@
     <p>
       <router-link :to="{
         name: 'Game',
-        params: { numberOfCards: parseInt(numberOfCards), playerName }
+        params: { numberOfCards: numberOfCards, playerName }
       }"
       >Click here to start</router-link>
     </p>
@@ -39,7 +39,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 h3 {
   margin: 40px 0 0;

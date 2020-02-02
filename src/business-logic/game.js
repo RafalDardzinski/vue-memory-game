@@ -31,7 +31,6 @@ class Game {
   }
 
   end() {
-    console.log('game ended');
     this.hasEnded = true;
   }
 }
