@@ -1,3 +1,6 @@
+import ResultsStorage from './results-storage';
+import Results from './results';
+
 /* eslint-disable no-plusplus */
 class Game {
   constructor(cardsFactory) {
@@ -8,7 +11,9 @@ class Game {
     this.cards = [];
   }
 
-  initialize(numberOfCards) {
+  initialize(numberOfCards, playerName) {
+    this.initialCardsLength = numberOfCards;
+    this.playerName = playerName;
     this.cards = this.cardsFactory.create(numberOfCards);
   }
 
@@ -32,6 +37,9 @@ class Game {
 
   end() {
     this.hasEnded = true;
+    const playTime = Date.now() - this.startedAt;
+    const gameResults = new Results(this.playerName, this.initialCardsLength, playTime, this.tries);
+    ResultsStorage.addResults(gameResults);
   }
 }
 

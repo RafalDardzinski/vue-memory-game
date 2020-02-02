@@ -37,7 +37,8 @@ export default {
   },
   created() {
     this.currentGame = GameFactory.create();
-    this.currentGame.initialize(this.numberOfCards);
+    this.currentGame.initialize(this.numberOfCards, this.playerName);
+    this.currentGame.start();
   },
   methods: {
     onCardsSelected(cards) {
