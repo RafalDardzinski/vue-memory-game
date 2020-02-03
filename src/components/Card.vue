@@ -22,34 +22,38 @@ export default {
     };
   },
   props: {
-    cardObj: Object,
+    cardObject: Object,
   },
   computed: {
     isDiscarded() {
-      return this.cardObj.isDiscarded;
+      return this.cardObject.isDiscarded;
     },
     color() {
-      return this.cardObj.color;
+      return this.cardObject.color;
     },
     colorInverted() {
-      return this.cardObj.colorInverted;
+      return this.cardObject.colorInverted;
     },
     shortenedValue() {
-      return this.cardObj.value.substring(0, 8);
+      return this.cardObject.value.substring(0, 8);
     },
   },
   methods: {
     flip() {
       this.averseVisible = !this.averseVisible;
       this.$emit('card-flipped', this);
-      setTimeout(() => {
-        if (this.averseVisible) {
-          this.$emit('averse-visible');
-          return;
-        }
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          if (this.averseVisible) {
+            this.$emit('averse-visible');
+            resolve();
+            return;
+          }
 
-        this.$emit('reverse-visible');
-      }, 200);
+          this.$emit('reverse-visible');
+          resolve();
+        }, 200);
+      });
     },
   },
 };

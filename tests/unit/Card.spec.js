@@ -1,56 +1,89 @@
 import { expect } from 'chai';
 import { shallowMount } from '@vue/test-utils';
 import Card from '@/components/Card.vue';
+import CardObject from '@/business-logic/card';
 
 describe('Card.vue', () => {
-  const cardValue = 'test value';
+  const cardValue = 'cardValue';
+  const cardColor = 'cardColor';
+  const cardColorInverted = 'cardColorInverted';
 
+  let cardObject;
   let unitUnderTest;
 
   beforeEach(() => {
+    cardObject = new CardObject(cardValue, cardColor, cardColorInverted);
     unitUnderTest = shallowMount(Card, {
       propsData: {
-        cardValue,
+        cardObject,
       },
     });
   });
 
-  it('renders cardValue in card\'s averse', () => {
+  it('renders shortenedValue in card\'s averse', () => {
     // Assert
+    const { shortenedValue } = unitUnderTest.vm;
     const averseText = unitUnderTest.find('.averse').text();
-    expect(averseText).to.contain(cardValue);
+    expect(averseText).to.contain(shortenedValue);
   });
 
   describe('methods.flip()', () => {
-    it('changes isFlipped to opposite value', () => {
+    it('changes averseVisible to opposite value', async () => {
       // Arrange
-      const oldValue = unitUnderTest.vm.isFlipped;
+      const oldValue = unitUnderTest.vm.averseVisible;
 
       // Act
-      unitUnderTest.vm.flip();
+      await unitUnderTest.vm.flip();
 
       // Assert
-      expect(unitUnderTest.vm.isFlipped).to.equal(!oldValue);
+      expect(unitUnderTest.vm.averseVisible).to.equal(!oldValue);
     });
 
-    it('emites \'card-flipped\' event with isFlipped property value as payload', async () => {
+    it('emits \'card-flipped\' event', async () => {
       const eventName = 'card-flipped';
 
       // Act
-      unitUnderTest.vm.flip();
-      await unitUnderTest.vm.$nextTick();
+      await unitUnderTest.vm.flip();
 
       // Assert
       const emittedEvents = unitUnderTest.emitted();
       expect(emittedEvents).to.have.property(eventName);
-      expect(emittedEvents[eventName][0]).to.contain(unitUnderTest.vm.isFlipped);
+    });
+
+    describe('When averseVisible is false...', () => {
+      it('emits \'averse-visible\' event', async () => {
+        // Arrange
+        const eventName = 'averse-visible';
+
+        // Act
+        await unitUnderTest.vm.flip();
+
+        // Assert
+        const emittedEvents = unitUnderTest.emitted();
+        expect(emittedEvents).to.have.property(eventName);
+      });
+    });
+
+    describe('When averseVisible is true', () => {
+      it('emits \'reverse-visible event\'', async () => {
+        // Arrange
+        const eventName = 'reverse-visible';
+        unitUnderTest.setData({ averseVisible: true });
+
+        // Act
+        await unitUnderTest.vm.flip();
+
+        // Assert
+        const emittedEvents = unitUnderTest.emitted();
+        expect(emittedEvents).to.have.property(eventName);
+      });
     });
   });
 
   describe('When created...', () => {
-    it('has isFlipped property that equals false', () => {
+    it('has averseVisible property that equals false', () => {
       // Assert
-      expect(unitUnderTest.vm.isFlipped).to.equal(false);
+      expect(unitUnderTest.vm.averseVisible).to.equal(false);
     });
   });
 });

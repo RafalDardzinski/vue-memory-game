@@ -1,9 +1,16 @@
 <template>
-  <div class="about">
-    <h1></h1>
-    <div>Tries {{tries}}</div>
-    <div>Player: {{playerName}}</div>
-    <Table :cards="cards" @cards-selected="onCardsSelected" />
+  <div class="game">
+    <div class="info">
+      <div class="info-player">Player: {{playerName}}</div>
+      <div class="into-tries">Tries {{tries}}</div>
+    </div>
+    <div>
+      <Table v-if="!hasGameEnded" :cards="cards" @cards-selected="onCardsSelected" />
+      <p class="game-ended-message" v-else>
+        Contgratulations {{playerName}}, you have finished the game in {{tries}} tries!
+        <router-link to="/" replace>Click here to go back.</router-link>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -25,6 +32,7 @@ export default {
   data() {
     return {
       currentGame: null,
+      hasGameEnded: false,
     };
   },
   computed: {
@@ -49,12 +57,15 @@ export default {
       }
     },
     endGame() {
-      console.log(`Well done! You have finished game with ${this.tries} tries.`);
+      this.hasGameEnded = true;
     },
   },
 };
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="scss">
+.info {
+  display: flex;
+  justify-content: space-between;
+}
 </style>

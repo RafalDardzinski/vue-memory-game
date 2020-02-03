@@ -2,25 +2,30 @@
   <div class="main-menu">
     <h3>Welcome to the Memory Game</h3>
     <div class="game-settings">
-
-      <input
-        type="text"
-        name="player-name"
-        id="player-name"
-        v-model="playerName"
-      >
-      <input
-        v-model.number="numberOfCards"
-        type="number"
-        name="cardsnumber"
-        id="cardsnumber"
-        step="2"
-        min="4"
-        max="24"
-        placeholder="4"
-        ref="numberOfCardsInput"
-        @input="refreshValidation()"
-      >
+      <div class="input-row">
+        <label for="player-name">Player name: </label>
+        <input
+          type="text"
+          name="player-name"
+          id="player-name"
+          v-model="playerName"
+        >
+      </div>
+      <div class="input-row">
+        <label for="cards-number">Number of cards: </label>
+        <input
+          v-model.number="numberOfCards"
+          type="number"
+          name="cards-number"
+          id="cardsnumber"
+          step="2"
+          min="4"
+          max="24"
+          placeholder="4"
+          ref="numberOfCardsInput"
+          @input="refreshValidation()"
+        >
+      </div>
     </div>
     <p v-if="isNumberOfCardsInputValid">
       <router-link :to="{
@@ -53,8 +58,6 @@ export default {
       isNumberOfCardsInputValid: true,
     };
   },
-  computed: {
-  },
   methods: {
     refreshValidation() {
       this.isNumberOfCardsInputValid = this.$refs.numberOfCardsInput.checkValidity();
@@ -64,8 +67,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '../colors.scss';
+
+.main-menu {
+  width: 640px;
+  margin: 0 auto;
+}
+
 h3 {
-  margin: 40px 0 0;
+  margin: 20px 0 20px;
+  font-size: 2em;
+  color: $darkShades;
 }
 ul {
   list-style-type: none;
@@ -76,7 +88,7 @@ li {
   margin: 0 10px;
 }
 a {
-  color: #42b983;
+  color:$lightAccent;
 }
 
 .warning {

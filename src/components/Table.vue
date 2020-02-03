@@ -7,7 +7,7 @@
       @click.capture="filterCardClick(card, $event)"
     >
       <Card
-        :cardObj="card"
+        :cardObject="card"
         @card-flipped="selectCard(card, $event)"
         @averse-visible="verifySelectedCards"
         @reverse-visible="unlockTable"

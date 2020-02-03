@@ -13,6 +13,8 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  max-width: 640px;
+  margin: 0 auto;
 }
 
 #nav {
@@ -20,7 +22,7 @@
 
   a {
     font-weight: bold;
-    color: #2c3e50;
+    color: #42b983;
 
     &.router-link-exact-active {
       color: #42b983;
